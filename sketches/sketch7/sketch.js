@@ -1,6 +1,3 @@
-// p5.js — Picture Naming (Cheshire Cat fade: word appears/disappears)
-// No instructions, no typing, no extra UI.
-// Just: simple picture + matching word that fades in/out transparently.
 
 let items = [
   { label: "clock", type: "clock" },
@@ -10,7 +7,7 @@ let items = [
 ];
 
 let idx = 0;
-let holdFrames = 220;     // how long before switching to next picture
+let holdFrames = 220;     
 let startFrame = 0;
 
 function setup() {
@@ -27,13 +24,12 @@ function windowResized() {
 function draw() {
   background(0);
 
-  // switch to next item every holdFrames
+  // switch to next item 
   if (frameCount - startFrame > holdFrames) {
     idx = (idx + 1) % items.length;
     startFrame = frameCount;
   }
 
-  // draw picture
   push();
   translate(width / 2, height * 0.45);
   drawPicture(items[idx].type);
@@ -47,7 +43,7 @@ function draw() {
   text(items[idx].label, width / 2, height * 0.78);
 }
 
-// Smooth “appear → linger → disappear” alpha curve
+
 function cheshireAlpha(t) {
   // t is time; make a repeating 0..1 phase
   let phase = (sin(t) + 1) * 0.5;      // 0..1
@@ -61,9 +57,7 @@ function smoothstep(edge0, edge1, x) {
   return x * x * (3 - 2 * x);
 }
 
-// --------------------
-// Simple white line icons
-// --------------------
+
 function drawPicture(type) {
   stroke(255);
   strokeWeight(6);
@@ -96,13 +90,10 @@ function drawClockIcon() {
 }
 
 function drawCupIcon() {
-  // cup body
   rect(-70, -40, 140, 95, 18);
 
-  // lip
   line(-55, -40, 55, -40);
 
-  // handle
   noFill();
   beginShape();
   vertex(70, -20);
