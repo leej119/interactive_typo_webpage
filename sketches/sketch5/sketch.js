@@ -1,11 +1,4 @@
-// p5.js — Simple Rhyme Words (black bg, white text)
-// Uses the words from your image:
-// Bug Jug Mug Hug
-// Can Fan Man Pan
-// Dad Bad Mad Had
-// Nut But Hut Cut
-//
-// Effect:
+
 // - Each word is drawn letter-by-letter
 // - Letters gently "float"
 // - The FIRST letter of each rhyme family slowly cycles (switches) between the related words
@@ -42,9 +35,7 @@ function draw() {
   }
 }
 
-// -------------------------
-// Build word positions
-// -------------------------
+
 function buildGrid() {
   cells = [];
 
@@ -68,9 +59,6 @@ function buildGrid() {
   }
 }
 
-// -------------------------
-// WordCell class (beginner-friendly)
-// -------------------------
 class WordCell {
   constructor(rowData, colIndex, x, y, size) {
     this.rowData = rowData;     // { rime:"ug", starters:[...] }
@@ -103,33 +91,28 @@ class WordCell {
     noStroke();
     textSize(this.size);
 
-    // --- 1) Decide what the first letter is *right now*
-    // We "cycle" through the starters list over time.
     let t = frameCount * this.switchSpeed;
     let idx = floor(t) % this.rowData.starters.length;
 
-    // optional: sometimes use the next one for a "flip" feeling
-    let nextIdx = (idx + 1) % this.rowData.starters.length;
-    let blend = t - floor(t); // 0..1
+    // let nextIdx = (idx + 1) % this.rowData.starters.length;
+    // let blend = t - floor(t); // 0..1
 
     // If blend is near the middle, briefly show the "next" letter (simple switch)
     let firstLetter = (blend > 0.55 && blend < 0.75) ? this.rowData.starters[nextIdx] : this.rowData.starters[idx];
 
     // The rhyme ending stays stable
-    let word = firstLetter + this.rowData.rime; // ex: "B" + "ug" => "Bug"
+    let word = firstLetter + this.rowData.rime; 
 
-    // --- 2) Draw letter-by-letter with floating offsets
     // letter spacing
     let gap = this.size * 0.55;
 
-    // base float for the whole word (gentle drift)
+  
     let driftX = sin(frameCount * this.speed + this.baseY * 0.01) * 8;
     let driftY = cos(frameCount * this.speed + this.baseX * 0.01) * 8;
 
     for (let i = 0; i < 3; i++) {
       let ch = word[i];
 
-      // per-letter wobble (each letter "floats" a bit differently)s
       let wobbleX = sin(frameCount * (this.speed + i * 0.01) + i * 10) * 6;
       let wobbleY = cos(frameCount * (this.speed + i * 0.01) + i * 10) * 6;
 
