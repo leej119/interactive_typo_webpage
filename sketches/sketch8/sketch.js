@@ -70,17 +70,13 @@ function draw() {
   // drawGhostCorrectOrder();
 }
 
-// --------------------
-// Sentence setup
-// --------------------
+
 function loadSentence(index) {
   baseOrder = sentences[index].slice();      // correct: [S, V, O]
   currentOrder = sentences[index].slice();   // start correct, then scramble
 
-  // shuffle once to begin with instability
   currentOrder = shuffleArray(currentOrder);
 
-  // init tile positions (start scattered)
   tilePos = [
     random(110, 190),
     random(260, 340),
@@ -88,11 +84,8 @@ function loadSentence(index) {
   ];
 }
 
-// --------------------
-// Reordering logic
-// --------------------
+
 function doRandomSwap() {
-  // swap two random indices (0,1,2)
   let a = floor(random(3));
   let b = floor(random(3));
   while (b === a) b = floor(random(3));
@@ -107,9 +100,7 @@ function doRandomSwap() {
   }
 }
 
-// --------------------
-// Motion + drawing
-// --------------------
+
 function updateTilePositions() {
   // for each slot i, its target x is targetPos[i]
   // but we want each WORD to move smoothly when it changes slots.
@@ -133,14 +124,12 @@ function drawTiles() {
 }
 
 function drawTile(x, y, word) {
-  // simple outlined tile
   rectMode(CENTER);
   noFill();
   stroke(255);
   strokeWeight(2);
   rect(x, y, 160, 74, 14);
 
-  // text
   noStroke();
   fill(255);
   textSize(30);
@@ -148,24 +137,20 @@ function drawTile(x, y, word) {
   rectMode(CORNER);
 }
 
-function drawGhostCorrectOrder() {
-  // a faint reference line: correct S V O order underneath
-  // (still minimal, but helps viewer “feel” the mismatch)
-  let ghostY = 430;
+// function drawGhostCorrectOrder() {
+//   let ghostY = 430;
 
-  fill(255, 70);
-  noStroke();
-  textSize(18);
-  text(baseOrder.join("  "), width / 2, ghostY);
+//   fill(255, 70);
+//   noStroke();
+//   textSize(18);
+//   text(baseOrder.join("  "), width / 2, ghostY);
 
-  stroke(255, 40);
-  strokeWeight(2);
-  line(90, ghostY + 22, 510, ghostY + 22);
-}
+//   stroke(255, 40);
+//   strokeWeight(2);
+//   line(90, ghostY + 22, 510, ghostY + 22);
+// }
 
-// --------------------
-// Helper
-// --------------------
+
 function shuffleArray(arr) {
   let a = arr.slice();
   for (let i = a.length - 1; i > 0; i--) {
