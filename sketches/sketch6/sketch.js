@@ -1,15 +1,3 @@
-// p5.js — Semantic Fluency (Beginner-friendly)
-// Simple sorting game: drag words into the right category.
-// Categories: FRUIT, ANIMAL, WEATHER
-// Design: black background, white text, simple boxes + smooth animation.
-//
-// How to play:
-// 1) Drag a word.
-// 2) Drop it into a category box.
-// 3) If correct, it snaps in and stays.
-//    If wrong, it wiggles and returns.
-//
-// Tip: Press [R] to reset.
 
 let categories = [
   { name: "FRUIT",   x: 60,  y: 90,  w: 160, h: 160 },
@@ -101,9 +89,7 @@ function drawHint() {
   text("Tip: Press R to reset", width / 2, height - 24);
 }
 
-// --------------------
-// Interaction
-// --------------------
+
 function mousePressed() {
   // pick the top-most tile under mouse
   for (let i = tiles.length - 1; i >= 0; i--) {
@@ -149,9 +135,6 @@ function mouseReleased() {
       grabbed.feedback = "bad";
       grabbed.wiggleTimer = 18;
     }
-  } else {
-    // not dropped on a box: just float back to wherever you released (no lock)
-    // (or send home if you want stricter behavior)
   }
 
   grabbed = null;
@@ -161,9 +144,7 @@ function keyPressed() {
   if (key === "r" || key === "R") resetGame();
 }
 
-// --------------------
-// Helpers
-// --------------------
+
 function categoryUnderPoint(px, py) {
   for (let c of categories) {
     if (px > c.x && px < c.x + c.w && py > c.y && py < c.y + c.h) return c;
@@ -221,9 +202,7 @@ function shuffleArray(arr) {
   return a;
 }
 
-// --------------------
-// WordTile class
-// --------------------
+
 class WordTile {
   constructor(text, correctCat, x, y) {
     this.text = text;
@@ -248,7 +227,6 @@ class WordTile {
 
     this.placedCat = null;
 
-    // feedback
     this.feedback = "none"; // "good" / "bad"
     this.wiggleTimer = 0;
   }
@@ -269,25 +247,21 @@ class WordTile {
   }
 
   draw() {
-    // tile look
     let ox = 0;
     if (this.wiggleTimer > 0) {
       ox = sin(frameCount * 0.8) * 6; // wiggle
     }
 
-    // outline only (simple)
     noFill();
     stroke(255);
     strokeWeight(2);
     rect(this.x + ox, this.y, this.w, this.h, 10);
 
-    // text
     noStroke();
     fill(255);
     textSize(16);
     text(this.text, this.x + ox + this.w / 2, this.y + this.h / 2);
 
-    // tiny feedback dot
     if (this.feedback === "good") {
       fill(255);
       circle(this.x + ox + this.w - 10, this.y + 10, 6);
